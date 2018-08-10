@@ -1,0 +1,53 @@
+{
+  "ApplicationFramework":{
+    "getVersion":"1.4.5.RNBS01R1\n",
+    "getResourceVersion":"1.1.906\n",
+    "getWebLauncherVersion":"1.2.17",
+    "getConnectivityActivationStatus":true
+    },
+  "Util":{
+    "getOSVersion":"Linux-4.4.0-31-generic",
+    "getDeviceModel":"renault7p",
+    "getAmbientColor":"rgb(0,120,240)",
+    "getLanguage":"en-gb",
+    "getLoggingLevel":1,
+    "getBaseUrl":""
+  },
+  "Application":{
+    "visible":true,
+    "type":1,
+    "isPopupActive":false,
+    "getStatusBarTitle":"Sample",
+    "getCommonLibraryPath":"file:///home/oad/OAD/OAF/AFAsset/apps/contents/private/resources"
+  },
+  "WidgetDescriptor":{
+    "id":"http://www.obigo.com/widget_id/287bbdf0b6bf7f11ba96d8b158e77eb7",
+    "version":"1.0.0",
+    "nameList":{ "widgetName": [ { "name": "Sample", "lang": "en-us" } ] },
+    "shortNameList":{ "widgetShortName": [ { "name": "sam", "lang": "en-us" } ] },
+    "authorName":"Frank",
+    "authorEmail":"Frank.koo@obigo.com",
+    "authorHref":"",
+    "license":"Frank",
+    "licenseHref":"",
+    "iconSrcPath":"icon.png",
+    "description":"My sample application",
+    "localURI":"file:///home/oad/OAD/OAF/AFAsset/apps/contents/private/http___www_obigo_com_widget_id_287bbdf0b6bf7f11ba96d8b158e77eb7_2117782282/",
+    "group":"system",
+    "featureList":{ "feature": [ { "name": "http:\/\/www.obigo.com\/api\/applicationmanager.getownerapplication", "required": true }, { "name": "http:\/\/www.obigo.com\/api\/vehicle", "required": true } ] },
+    "drivingRestriction":"allowed:fully",
+    "killable":true,
+    "autostart":true,
+    "running":true,
+    "reserved":false,
+    "service":false,
+    "activationStatus":true,
+    "iconWidth":200,
+    "iconHeight":200,
+    "widgetWidth":800,
+    "widgetHeight":423,
+    "activationDate":0,
+    "expirationDate":0,
+    "subscriptionStatus":1
+  }
+}
