@@ -1,6 +1,5 @@
 <template>
   <div>
-    <obg-button type="square" @click='onClick' style="width:200px; height:50px; margin:auto;">Hide</obg-button>
     <obg-list>
       <obg-list-item>
     <div v-if="showtemp==true" style="font-size: 25px; color: deepskyblue;">ApplicationShown Event Pass!!</div>
@@ -11,20 +10,24 @@
     <div v-else style="font-size: 25px;">ApplicationHidden Event Not Yet!!</div>
       </obg-list-item>
       <obg-list-item>
-    <div v-if="activatedtemp==true" style="font-size: 25px; color: deepskyblue;">ApplicationActivated Event Pass!!</div>
-    <div v-else style="font-size: 25px;">ApplicationActivated Event Not Yet!!</div>
-      </obg-list-item>
-      <obg-list-item>
-    <div v-if="deactivatedtemp==true" style="font-size: 25px; color: deepskyblue;">ApplicationDeactivated Event Pass!!</div>
-    <div v-else style="font-size: 25px;">ApplicationDeactivated Event Not Yet!!</div>
-      </obg-list-item>
-      <obg-list-item>
     <div v-if="colortemp==true" style="font-size: 25px; color: deepskyblue;">AmbientColorChanged Event Pass!!</div>
     <div v-else style="font-size: 25px;">AmbientColorChanged Event Not Yet!!</div>
       </obg-list-item>
       <obg-list-item>
     <div v-if="languagetemp==true" style="font-size: 25px; color: deepskyblue;">LanguageChanged Event Pass!!</div>
     <div v-else style="font-size: 25px;">LanguageChanged Event Not Yet!!</div>
+      </obg-list-item>
+      <obg-list-item>
+    <div v-if="lockouttemp==true" style="font-size: 25px; color: deepskyblue;">ChangedLockoutStatus Event Pass!!</div>
+    <div v-else style="font-size: 25px;">ChangedLockoutStatus Event Not Yet!!</div>
+      </obg-list-item>
+      <obg-list-item>
+    <div v-if="memoryusagetemp==true" style="font-size: 25px; color: deepskyblue;">MemoryUsage Event Pass!!</div>
+    <div v-else style="font-size: 25px;">MemoryUsage Event Not Yet!!</div>
+      </obg-list-item>
+      <obg-list-item>
+    <div v-if="loadedtemp==true" style="font-size: 25px; color: deepskyblue;">ApplicationLoaded Event Pass!!</div>
+    <div v-else style="font-size: 25px;">ApplicationLoaded Event Not Yet!!</div>
       </obg-list-item>
       <obg-list-item>
     <div v-if="maintemp==true" style="font-size: 25px; color: deepskyblue;">ApplicationMain Event Pass!!</div>
@@ -34,6 +37,23 @@
     <div v-if="backtemp==true" style="font-size: 25px; color: deepskyblue;">ApplicationBack Event Pass!!</div>
     <div v-else style="font-size: 25px;">ApplicationBack Event Not Yet!!</div>
       </obg-list-item>
+      <obg-list-item>
+    <div v-if="updatedsubscriptiontemp==true" style="font-size: 25px; color: deepskyblue;">UpdatedSubscriptionStatus Event Pass!!</div>
+    <div v-else style="font-size: 25px;">UpdatedSubscriptionStatus Event Not Yet!!</div>
+      </obg-list-item>
+      <obg-list-item>
+    <div v-if="updatedexpirationtemp==true" style="font-size: 25px; color: deepskyblue;">UpdatedExpirationDate Event Pass!!</div>
+    <div v-else style="font-size: 25px;">UpdatedExpirationDate Event Not Yet!!</div>
+      </obg-list-item>
+      <obg-list-item>
+    <div v-if="updatedprivacytemp==true" style="font-size: 25px; color: deepskyblue;">UpdatedPrivacyModeStatus Event Pass!!</div>
+    <div v-else style="font-size: 25px;">UpdatedPrivacyModeStatus Event Not Yet!!</div>
+      </obg-list-item>
+      <obg-list-item>
+    <div v-if="updatedconfigurationtemp==true" style="font-size: 25px; color: deepskyblue;">UpdatedConfigurations Event Pass!!</div>
+    <div v-else style="font-size: 25px;">UpdatedConfigurations Event Not Yet!!</div>
+      </obg-list-item>
+      
   </obg-list>
     <!--<obg-list style="height:69px;" :hideDummyItem="true">
       <obg-list-item class="header">
@@ -64,25 +84,36 @@ import {list, listItem} from 'obigo-js-ui-rnbs/components/list'
 export default {
   mounted () {
     const app = window.applicationFramework.applicationManager
-    app.getOwnerApplication(window.document).addEventListener('ApplicationShown', this.shown)
-    app.getOwnerApplication(window.document).addEventListener('ApplicationHidden', this.hidden)
-    app.getOwnerApplication(window.document).addEventListener('ApplicationActivated', this.activated)
-    app.getOwnerApplication(window.document).addEventListener('ApplicationDeactivated', this.deactivated)
-    app.getOwnerApplication(window.document).addEventListener('AmbientColorChanged', this.colorchanged)
-    app.getOwnerApplication(window.document).addEventListener('LanguageChanged', this.languagechanged)
-    app.addEventListener('ApplicationMain', this.main)
-    app.addEventListener('ApplicationBack', this.back)
+    const am = window.applicationFramework.applicationManager.getOwnerApplication(window.document)
+    am.addEventListener('ApplicationShown', () => { this.showtemp = true })
+    am.addEventListener('ApplicationHidden', () => { this.hidetemp = true })
+    am.addEventListener('AmbientColorChanged', (color) => { this.colortemp = true; console.log(color.str) })
+    am.addEventListener('LanguageChanged', (language) => { this.languagetemp = true; console.log(language.str) })
+    am.addEventListener('ChangedLockoutStatus', (status) => { this.lockouttemp = true; console.log(status) })
+    am.addEventListener('MemoryUsage', (usage) => { this.memoryusagetemp = true; console.log(usage) })
+    app.addEventListener('ApplicationLoaded', (appl) => { this.loadedtemp = true; console.log(appl.visible) })
+    app.addEventListener('ApplicationMain', (appl) => { this.maintemp = true; console.log(appl.visible) })
+    app.addEventListener('ApplicationBack', (appl) => { this.backtemp = true; console.log(appl.visible) })
+    app.addEventListener('UpdatedSubscriptionStatus', (wdc) => { this.updatedsubscriptiontemp = true; console.log(wdc) })
+    app.addEventListener('UpdatedExpirationDate', (date) => { this.updatedexpirationtemp = true; console.log(date) })
+    app.addEventListener('UpdatedPrivacyModeStatus', (status) => { this.updatedprivacytemp = true; console.log(status) })
+    app.addEventListener('UpdatedConfigurations', (configurations) => { this.updatedprivacytemp = true; console.log(configurations) })
   },
   data () {
     return {
       hidetemp: false,
       showtemp: false,
-      activatedtemp: false,
-      deactivatedtemp: false,
       colortemp: false,
       languagetemp: false,
+      lockouttemp: false,
+      memoryusagetemp: false,
+      loadedtemp: false,
       maintemp: false,
-      backtemp: false
+      backtemp: false,
+      updatedsubscriptiontemp: false,
+      updatedexpirationtemp: false,
+      updateprivacytemp: false,
+      updatedconfigurationtemp: false
     }
   },
   computed: {
@@ -110,39 +141,6 @@ export default {
     compare: function (a, b) {
       if (a === b) return true
       else return false
-    },
-    onClick (evt) {
-      console.log(evt)
-      window.applicationFramework.applicationManager.getOwnerApplication(window.document).hide()
-    },
-    hidden: function () {
-      this.hidetemp = true
-      // window.applicationFramework.applicationManager.getOwnerApplication(window.document).show()
-    },
-    shown: function () {
-      this.showtemp = true
-    },
-    activated: function () {
-      this.activatedtemp = true
-      console.log('Application Activated!!!!!!!!!!')
-    },
-    deactivated: function () {
-      this.deactivatedtemp = true
-      console.log('Application Deactivated!!!!!!!!!!')
-    },
-    colorchanged: function (color) {
-      this.colortemp = true
-      console.log('Ambient Color Changed!!!!!!!!!!')
-    },
-    languagechanged: function (language) {
-      this.languagetemp = true
-      console.log('Language Changed!!!!!!!!!!')
-    },
-    main: function (app) {
-      this.maintemp = true
-    },
-    back: function (app) {
-      this.backtemp = true
     }
     /* ActualResult: function (key, keys) {
       var tmp = doAPITest[key][keys]
